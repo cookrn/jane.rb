@@ -11,7 +11,15 @@ This is a WIP.
 ## TODOs
 
 * [x] Boot
+* [ ] Global Logging
 * [ ] Sessions
+* [ ] Default Session with Default Name
+* [ ] Session PIDs via File Locking
+* [ ] PID Clearing on Process Exit
+* [ ] PID Cleanup
+* [ ] Process Daemonizing
+* [ ] Session Logging
+* [ ] Session Key Generation
 
 ## License
 
