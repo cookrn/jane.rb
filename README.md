@@ -8,6 +8,11 @@ A flexible, run-anywhere personal distributed computing kernel.
 
 This is a WIP.
 
+## TODOs
+
+* [ ] Boot
+* [ ] Sessions
+
 ## License
 
 Currently, the source is visible, but all rights are reserved.
