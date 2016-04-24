@@ -10,7 +10,7 @@ This is a WIP.
 
 ## TODOs
 
-* [ ] Boot
+* [x] Boot
 * [ ] Sessions
 
 ## License

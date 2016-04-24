@@ -1,0 +1,1 @@
+require 'jane/boot/homedir'

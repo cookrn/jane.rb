@@ -1,2 +1,26 @@
 #!/usr/bin/env ruby
-sleep
+
+jane_loaded =
+  begin
+    require('jane')
+  rescue LoadError
+    false
+  end
+
+unless jane_loaded
+  require 'bundler/inline'
+
+  rb_sources =
+    if !(rb_lib_env_dir = ENV['JANE_RB_LIB_DIR']).nil?
+      rb_lib_env_dir
+    else
+      File.expand_path('src/rb')
+    end
+
+  gemfile do
+    gem 'jane', path: "#{rb_sources}/jane"
+  end
+end
+
+abort('Unable to boot Jane!') unless defined?(Jane)
+Jane.boot
