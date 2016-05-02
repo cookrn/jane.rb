@@ -12,7 +12,7 @@ module Jane
     boot_steps.add(callable || boot_step)
   end
 
-  def self.boot
+  def self.boot!
     if !boot_steps.nil? && !boot_steps.empty?
       boot_steps.each(&:call)
     end

@@ -1,26 +1,39 @@
 #!/usr/bin/env ruby
 
-jane_loaded =
+Jane.boot!
+
+BEGIN {
   begin
-    require('jane')
+    require('rubygems')
   rescue LoadError
-    false
+    abort('You must have RubyGems installed to run Jane!')
   end
 
-unless jane_loaded
-  require 'bundler/inline'
-
-  rb_sources =
-    if !(rb_lib_env_dir = ENV['JANE_RB_LIB_DIR']).nil?
-      rb_lib_env_dir
-    else
-      File.expand_path('src/rb')
+  bundler_loaded =
+    begin
+      require('bundler')
+    rescue LoadError
+      false
     end
 
-  gemfile do
-    gem 'jane', path: "#{rb_sources}/jane"
-  end
-end
+  unless bundler_loaded
+    bundler_version = ENV['JANE_BUNDLER_VERSION'] || '1.11.2'
+    bundler_gem_path = File.expand_path("vendor/bundler-#{bundler_version}.gem")
 
-abort('Unable to boot Jane!') unless defined?(Jane)
-Jane.boot
+    if File.exist?(bundler_gem_path)
+      require 'rubygems/package'
+      bundler_gem_package = Gem::Package.new(bundler_gem_path)
+      bundler_gem_package.spec.activate
+    end
+  end
+
+  abort('Unable to load Bundler!') unless defined?(Bundler)
+
+  ENV['JANE_RB_LIB_DIR'] ||= File.expand_path('src/rb')
+  ENV['BUNDLE_GEMFILE'] ||= File.expand_path('Gemfile')
+
+  require 'bundler/setup'
+  require 'jane'
+
+  abort('Unable to boot Jane!') unless defined?(Jane)
+}
